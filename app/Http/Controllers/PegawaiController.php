@@ -16,4 +16,14 @@ class PegawaiController extends Controller
         return view('pegawai',['pegawai' => $pegawai]);
     }
     
+    public function cari(Request $request)
+    {
+        $cari = $request->cari;
+
+        $pegawai = DB::table('pegawai')
+        ->where('pegawai_nama','like',"%".$cari."%")
+        ->paginate();
+
+        return view('pegawai',['pegawai' => $pegawai]);
+    }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PegawaiController;
+use App\Models\Mahasiswa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +25,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/mahasiswa/cari',[MahasiswaController::class, 'cari']);
 Route::get('/mahasiswa', [App\http\Controllers\MahasiswaController::class, 'index'])->name('mahasiswa');
 Route::post('/mahasiswa', [App\http\Controllers\MahasiswaController::class, 'create'])->name('add.mhs');
 
@@ -36,6 +37,6 @@ Route::get('/mahasiswa/delete/{id}', [App\http\Controllers\MahasiswaController::
 Route::get('/mahasiswa/exportpdf', [App\http\Controllers\MahasiswaController::class, 'exportPdf']);
 
 Route::get('/pegawai',[PegawaiController::class, 'index']);
-
+Route::get('/pegawai/cari',[PegawaiController::class, 'cari']);
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);

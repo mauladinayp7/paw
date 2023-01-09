@@ -25,9 +25,10 @@
                <a href="/mahasiswa/exportpdf" class="btn btn-sm btn-success">Export PDF</a>
             </div>
             <div class="col-5 my-4">
-                <form class="d-flex" role="search">
-                    <input name="cari" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-succes" type="submit">Search</button>
+                @csrf
+                <form class="d-flex" action="/mahasiswa/cari" method="GET">
+                    <input class="form-control me-2" type="text" name="cari" placeholder="Cari Data Mahasiswa . ." value="{{ old('cari') }}">
+                    <button class="btn btn-outline-succes" type="submit">Cari</button>
                 </form>
             </div>
             <div class="col-3 my-4" align="right">
@@ -36,6 +37,15 @@
                     Tambah Data
                 </button>
             </div>
+
+            @if ($mahasiswa->count() > 0)
+            @else
+                <center>
+                    <font color="red">
+                        <h3>!! Tidak ditemukan data yang sesuai dengan kata kunci !!</h3>
+                    </font>
+                </center>
+            @endif
             <div class="table-responsive">
                 <table class="table table table-hover">
                     <thead>
@@ -47,7 +57,7 @@
                             <th>AKSI</th>
                         </tr>
                     </thead>
-                    @foreach ($data_mahasiswa as $mahasiswa)
+                    @foreach ($mahasiswa as $mahasiswa)
                         <tbody>
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
@@ -62,11 +72,8 @@
                         </tbody>
                     @endforeach
                 </table>
-                Current Page: {{ $data_mahasiswa->currentPage() }}<br>
-                Jumlah Data: {{ $data_mahasiswa->total() }}<br>
-                Data perhalaman: {{ $data_mahasiswa->perPage() }}<br>
+                
                 <br>
-                {{$data_mahasiswa->links()}}
             </div>
         </div>
     </div>

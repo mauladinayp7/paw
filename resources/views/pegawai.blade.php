@@ -79,33 +79,48 @@ crossorigin="anonymous">
 
 <body>
     <div class="container mt-4">
-        <center><h1 class="my-4">Halaman Data Pegawai</h1></center>
+        <center><h1 class="my-4">Halaman Data Pegawai</h1>
+        <div class="col-5 my-4">
+                    @csrf
+                    <form class="d-flex" action="/pegawai/cari" method="GET">
+                        <input class="form-control me-2" type="text" name="cari" placeholder="Cari Data Pegawai . ." value="{{ old('cari') }}">
+                        <button class="btn btn-outline-succes" type="submit">Cari</button>
+                    </form>
+                </div>
+    </center>
 
         <div class="card mb-3">
-            {{-- membuat tabel --}}
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        {{-- <th scope="col">No</th> --}}
-                        <th>Nama</th>
-                        <th>Jabatan</th>
-                        <th>Umur</th>
-                        <th>Alamat</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{-- melakukan looping data --}}
-                    @foreach ($pegawai as $p)
+
+            <div class="row">
+                
+
+                {{-- membuat tabel --}}
+                <table class="table table-striped">
+                    <thead>
                         <tr>
-                            {{-- <td>{{ $loop->iteration }}</td> --}}
-                            <td>{{ $p->pegawai_nama }}</td>
-                            <td>{{ $p->pegawai_jabatan }}</td>
-                            <td>{{ $p->pegawai_umur }}</td>
-                            <td>{{ $p->pegawai_alamat }}</td>
+                            {{-- <th scope="col">No</th> --}}
+                            <th>Nama</th>
+                            <th>Jabatan</th>
+                            <th>Umur</th>
+                            <th>Alamat</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {{-- melakukan looping data --}}
+                        @foreach ($pegawai as $p)
+                            <tr>
+                                {{-- <td>{{ $loop->iteration }}</td> --}}
+                                <td>{{ $p->pegawai_nama }}</td>
+                                <td>{{ $p->pegawai_jabatan }}</td>
+                                <td>{{ $p->pegawai_umur }}</td>
+                                <td>{{ $p->pegawai_alamat }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            
         </div>
         {{-- perhatikan script di bawah ini untuk membuat paginasi dan yang 
 berkaitan dengan paginasi --}}

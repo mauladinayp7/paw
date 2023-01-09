@@ -11,16 +11,36 @@ use Illuminate\Support\Facades\DB;
 
 class MahasiswaController extends Controller
 {
-
-    public function index(Request $request)
+    public function index()
     {
-        if($request->has('cari')){
-            $data_mahasiswa = \App\Models\Mahasiswa::where('nama', 'LIKE', '%'. $request->cari .'%')->get();
-        }else{
-            $data_mahasiswa = Mahasiswa::paginate(5);
-            //$data_mahasiswa = \App\Models\Mahasiswa::all();
-        }
-        return view('mahasiswa.index',['data_mahasiswa' => $data_mahasiswa]);
+                //Mengambil data dari tabel pegawai
+            $mahasiswa = DB::table('mahasiswa')->paginate(5);
+
+
+                //Mengirim data mahasiswa ke view index
+            return view('mahasiswa.index',['mahasiswa' => $mahasiswa]);
+    }
+
+ //   public function index(Request $request)
+ //   {
+ //       if($request->has('cari')){
+ //           $data_mahasiswa = \App\Models\Mahasiswa::where('nama', 'LIKE', '%'. $request->cari .'%')->get();
+ //       }else{
+ //           $data_mahasiswa = Mahasiswa::paginate(5);
+ //           //$data_mahasiswa = \App\Models\Mahasiswa::all();
+ //       }
+ //       return view('mahasiswa.index',['data_mahasiswa' => $data_mahasiswa]);
+ //   }
+
+    public function cari(Request $request)
+    {
+        $cari = $request->cari;
+
+        $mahasiswa = DB::table('mahasiswa')
+        ->where('nama','like',"%".$cari."%")
+        ->paginate();
+
+        return view('mahasiswa.index',['mahasiswa' => $mahasiswa]);
     }
 
     public function create(Request $request)
